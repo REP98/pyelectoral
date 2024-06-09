@@ -90,7 +90,8 @@ class CNE:
         elif self._dictionary['OBJECTION'] in content:
             matchs = re.search(self._dictionary['OBJECTION_PATTERS'], content)
             if matchs:
-                o = re.sub(r"\(\d\)+","", matchs).title().strip()
+                c: str = matchs.group(1).strip()
+                o = re.sub(r"\(\d\)+","", c).title().strip()
                 if o == "Fallecido":
                     return STATUS.DECEASED
                 else:
