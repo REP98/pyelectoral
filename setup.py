@@ -10,7 +10,7 @@ AUTHOR_EMAIL = "delfinmundo@gmail.com"
 URL = "https://rep98.vzlaweb.com"
 
 LICENSE = "MIT"
-DESCRITION = "Libreria Python para consultas al CNE de Venezuela con GUI integradas"
+DESCRIPTION = "Libreria Python para consultas al CNE de Venezuela con GUI integradas"
 LONG_DESCRIPTION = (HERE / "README.md").read_text(encoding="utf-8")
 LONG_DESC_TYPE = "text/markdown"
 
@@ -22,7 +22,7 @@ INSTALL_REQUIRES = [
 setup(
     name=PACKAGE_NAME,
     version=VERSION,
-    descrition = DESCRITION,
+    description = DESCRIPTION,
     long_description = LONG_DESCRIPTION,
     long_description_content_type = LONG_DESC_TYPE,
     author = AUTHOR,

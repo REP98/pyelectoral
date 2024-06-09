@@ -146,32 +146,49 @@ class as_collection:
     Args:
         data (list): Lista de cedulas en formato ['V-00000000']
         outher_uri: (str) URL Opcional. Defaults None
+        with_tqdm (bool) Indica se se añade una barra de progreso en terminal. Tenga en cuenta que debe tener instalado tqdm. Defaults to False
     """
-    def __init__(self, data: list, outher_uri : str = None):
+    def __init__(self, data: list, outher_uri : str = None, with_tqdm : bool = False):
         """Inicializa la consulta de cedulas de la lista
 
         Args:
             data (list): lista de cédulas
             outher_uri (str, optional): URL opcional. Defaults to None.
+            with_tqdm (bool) Indica se se añade una barra de progreso en terminal, Defaults to False
         """
         self.errors: list = []
         self.results: list = []
         self._cne = CNE(other_url=outher_uri)
-        self._process(data)
-    
-    def _process(self, data: list):
+        self._process(data, with_tqdm)
+            
+    def _process(self, data: list, with_tqdm=False) -> None:
         if data == []:
             raise Exception(self._cne.err(2))
         
-        for i in data:
+        if with_tqdm:
             try:
-                nal, dni = i.split("-")
-                resultconsult = self._cne.query(nal, int(dni))
-                self.results.append(resultconsult)
-            except ConnectionError:
+                from tqdm import tqdm
+                for i in tqdm(data, desc="PyElector Progress: ", ascii=True, colour="#E53935"):
+                    try:
+                        nal, dni = i.split("-")
+                        resultconsult = self._cne.query(nal, int(dni))
+                        self.results.append(resultconsult)
+                    except ConnectionError:
+                        raise
+                    except:
+                        self.errors.append(i)                
+            except ImportError:
                 raise
-            except:
-                self.errors.append(i)
+        else:
+            for i in data:
+                try:
+                    nal, dni = i.split("-")
+                    resultconsult = self._cne.query(nal, int(dni))
+                    self.results.append(resultconsult)
+                except ConnectionError:
+                    raise
+                except:
+                    self.errors.append(i)
                 
     def all(self) -> list:
         """Retorna todos los resultados de la busquedad
@@ -193,4 +210,3 @@ class as_collection:
         if 0 <= ix < len(self.results):
             return self.results[ix]
         return False
-        
