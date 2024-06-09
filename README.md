@@ -1,12 +1,6 @@
 # PyElectoral
 Librería Python, que permite la consulta de cédulas del [CNE](http://www.cne.gob.ve) de forma fácil y rápida, además permite la carga desde varias fuentes como "JSON", "Excel", "CSV" y "TXT".
 
-[TOC]
-* Instalación
-    - Dependecias
-* Uso
-    - Librerias Internas
-* Datos Importantes
 
 ## Instalación
 Puedes instalar el paquete PyElectoral desde el instalador [PIP](https://pypi.org/)
